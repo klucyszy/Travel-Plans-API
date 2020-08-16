@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TravelPlans.API.Common.Controllers;
 using TravelPlans.Application.TravelPlans.Commands;
+using TravelPlans.Application.TravelPlans.Dtos;
+using TravelPlans.Application.TravelPlans.Queries;
 
 namespace TravelPlans.API.Controllers
 {
@@ -12,9 +15,11 @@ namespace TravelPlans.API.Controllers
         /// </summary>
         /// <returns>List of user travel plans.</returns>
         [HttpGet("me")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult<IEnumerable<TravelPlanDto>>> Get()
         {
-            return Ok();
+            var travelPlans = await Mediator.Send(new GetTravelPlansQuery(CurrentUser.Id));
+
+            return Ok(travelPlans);
         }
 
         /// <summary>
@@ -24,7 +29,9 @@ namespace TravelPlans.API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            return Ok();
+            var travelPlans = await Mediator.Send(new GetTravelPlansQuery(default));
+
+            return Ok(travelPlans);
         }
 
         /// <summary>
@@ -48,6 +55,13 @@ namespace TravelPlans.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UpdateTravelPlanCommand command)
         {
+            if (id != command.TravelPlan.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
             return Ok();
         }
 
