@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TravelPlans.API</name>
+    </assembly>
+    <members>
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Get">
+            <summary>
+            Retrieve users travel plans.
+            </summary>
+            <returns>List of user travel plans.</returns>
+        </member>
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.GetAll">
+            <summary>
+            Retrieve all travel plans.
+            </summary>
+            <returns>List of travel plans.</returns>
+        </member>
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Add(TravelPlans.Application.TravelPlans.Commands.AddTravelPlanCommand)">
+            <summary>
+            Creates a new travel plan.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Update(System.Int32,TravelPlans.Application.TravelPlans.Commands.UpdateTravelPlanCommand)">
+            <summary>
+            Update a travel plan.
+            </summary>
+            <param name="id">Travel plan indentifier.</param>
+            <param name="command">Travel plan updated body.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Delete(System.Int32)">
+            <summary>
+            Remove a travel plan.
+            </summary>
+            <param name="id">Travel plan identifier.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
