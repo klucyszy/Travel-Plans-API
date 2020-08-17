@@ -41,6 +41,16 @@ namespace TravelPlans.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(AddTravelPlanCommand command)
         {
+            if (!string.IsNullOrEmpty(command.UserId) && !CurrentUser.IsAdmin)
+            {
+                return Unauthorized();
+            }
+
+            if (string.IsNullOrEmpty(command.UserId))
+            {
+                command.UserId = "TestUser1";
+            }
+
             await Mediator.Send(command);
 
             return Ok();

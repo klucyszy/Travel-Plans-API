@@ -60,5 +60,34 @@ namespace TravelPlans.API
 
         #endregion
 
+        #region CORS
+
+        public static string TravelPlansCorsPolicy = "TravelPlansCorsPolicy";
+
+        public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins("http://localhost:8081")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
+            return services;
+        }
+
+        public static IApplicationBuilder UseCorsPolicy(this IApplicationBuilder app)
+        {
+            app.UseCors();
+
+            return app;
+        }
+
+        #endregion
     }
 }

@@ -24,6 +24,7 @@ namespace TravelPlans.API
             services.AddDatabase(Configuration);
             services.AddApplication();
             services.AddSwaggerDocs();
+            services.AddCorsPolicy();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +38,8 @@ namespace TravelPlans.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCorsPolicy();
 
             app.UseAuthorization();
 
