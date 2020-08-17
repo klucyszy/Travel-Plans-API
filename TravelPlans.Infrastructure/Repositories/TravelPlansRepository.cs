@@ -31,6 +31,7 @@ namespace Infrastructure.Repositories
                 return;
             }
 
+            _context.Detach(travelPlan);
             _context.TravelPlans.Remove(travelPlan);
             await _context.SaveChangesAsync();
         }

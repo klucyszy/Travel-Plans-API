@@ -6,11 +6,7 @@ namespace TravelPlans.Application.TravelPlans.Exceptions
     [Serializable]
     public class TravelPlanNotFoundException : Exception
     {
-        public TravelPlanNotFoundException() { }
-        public TravelPlanNotFoundException(string message) : base(message) { }
-        public TravelPlanNotFoundException(string message, Exception inner) : base(message, inner) { }
-        protected TravelPlanNotFoundException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public int Id { get; set; }
+        public TravelPlanNotFoundException(int id) : base($"Travel plan with {id} not found") => Id = id;
     }
 }

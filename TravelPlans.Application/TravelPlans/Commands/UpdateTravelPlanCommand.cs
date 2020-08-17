@@ -26,7 +26,7 @@ namespace TravelPlans.Application.TravelPlans.Commands
             {
                 if (!await _travelPlansRepository.ExistsAsync(request.TravelPlan.Id))
                 {
-                    throw new TravelPlanNotFoundException("Travel plan not found");
+                    throw new TravelPlanNotFoundException(request.TravelPlan.Id);
                 }
 
                 var travelPlan = request.TravelPlan.AsEntity(request.TravelPlan.Id);

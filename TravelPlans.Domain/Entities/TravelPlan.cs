@@ -14,16 +14,9 @@ namespace TravelPlans.Domain.Entities
         public DateTime? EndDate { get; set; }
         public string Locations { get; set; }
 
-        public IEnumerable<string> GetLocations()
-        {
-            return JsonConvert.DeserializeObject<IEnumerable<string>>(Locations ?? "[]");
-        }
-
-        public void SetLocations(IEnumerable<string> locations)
-        {
-            Locations = JsonConvert.SerializeObject(locations ?? Enumerable.Empty<string>());
-        }
-
-
+        public IEnumerable<string> GetLocations() 
+            => JsonConvert.DeserializeObject<IEnumerable<string>>(Locations ?? "[]");
+        public void SetLocations(IEnumerable<string> locations) 
+            => Locations = JsonConvert.SerializeObject(locations ?? Enumerable.Empty<string>());
     }
 }
