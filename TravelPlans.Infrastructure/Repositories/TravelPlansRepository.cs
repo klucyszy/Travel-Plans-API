@@ -37,8 +37,8 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> ExistsAsync(int id)
         {
-            TravelPlan travelPlan = await GetAsync(id);
-
+            TravelPlan travelPlan = await _context.TravelPlans.FindAsync(id);
+            _context.Detach(travelPlan);
             return travelPlan != null;
         }
 

@@ -16,6 +16,16 @@ namespace TravelPlans.Infrastructure.Sql.Context
         {
         }
 
+        public void Detach(TravelPlan travelPlan)
+        {
+            if (travelPlan is null)
+            {
+                return;
+            }
+
+            base.Entry(travelPlan).State = EntityState.Detached;
+        }
+
         protected Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return base.SaveChangesAsync();

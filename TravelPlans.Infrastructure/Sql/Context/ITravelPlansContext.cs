@@ -9,5 +9,6 @@ namespace TravelPlans.Infrastructure.Sql.Context
     {
         public DbSet<TravelPlan> TravelPlans { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        void Detach(TravelPlan travelPlan);
     }
 }
