@@ -16,7 +16,7 @@ namespace TravelPlans.API
             //Add swagger document generator
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "e-library API", Version = "v1.0" });
+                c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Travel Plans API", Version = "v1.0" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -52,7 +52,7 @@ namespace TravelPlans.API
             app.UseSwagger();   
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "e-library v1.0 API");
+                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Travel Plans v1.0 API");
             });
 
             return app;
