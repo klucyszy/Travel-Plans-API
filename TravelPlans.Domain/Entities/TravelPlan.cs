@@ -12,7 +12,18 @@ namespace TravelPlans.Domain.Entities
         public string Name { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public IEnumerable<string> Locations { get; set; }
-        public string LocationsString => JsonConvert.SerializeObject(Locations ?? Enumerable.Empty<string>());
+        public string Locations { get; set; }
+
+        public IEnumerable<string> GetLocations()
+        {
+            return JsonConvert.DeserializeObject<IEnumerable<string>>(Locations ?? "[]");
+        }
+
+        public void SetLocations(IEnumerable<string> locations)
+        {
+            Locations = JsonConvert.SerializeObject(locations ?? Enumerable.Empty<string>());
+        }
+
+
     }
 }

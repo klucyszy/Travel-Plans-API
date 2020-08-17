@@ -26,7 +26,7 @@ namespace TravelPlans.Infrastructure.Sql.Context
             base.Entry(travelPlan).State = EntityState.Detached;
         }
 
-        protected Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return base.SaveChangesAsync();
         }

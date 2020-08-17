@@ -14,10 +14,11 @@ namespace TravelPlans.Application.TravelPlans.Extensions
             return new TravelPlanDto
             {
                 Id = travelPlan.Id,
+                UserId = travelPlan.UserId,
                 Name = travelPlan.Name,
                 StartDate = travelPlan.StartDate.HasValue ? travelPlan.StartDate.Value.ToString("yyyy-MM-dd") : null,
                 EndDate = travelPlan.EndDate.HasValue ? travelPlan.EndDate.Value.ToString("yyyy-MM-dd") : null,
-                Locations = JsonConvert.DeserializeObject<IEnumerable<string>>(travelPlan.LocationsString)
+                Locations = travelPlan.GetLocations()
             };
         }
         
@@ -28,15 +29,17 @@ namespace TravelPlans.Application.TravelPlans.Extensions
 
         public static TravelPlan AsEntity(this TravelPlanDto travelPlanDto, int id)
         {
-            return new TravelPlan
+            TravelPlan travelPlan = new TravelPlan
             {
                 Id = id,
                 UserId = travelPlanDto.UserId,
                 Name = travelPlanDto.Name,
                 StartDate = DateTime.Parse(travelPlanDto.StartDate),
-                EndDate = DateTime.Parse(travelPlanDto.EndDate),
-                Locations = travelPlanDto.Locations
+                EndDate = DateTime.Parse(travelPlanDto.EndDate)
             };
+            travelPlan.SetLocations(travelPlanDto.Locations);
+
+            return travelPlan;
         }
     }
 }

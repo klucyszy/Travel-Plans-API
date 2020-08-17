@@ -33,9 +33,9 @@ namespace TravelPlans.Application.TravelPlans.Commands
                     UserId = request.UserId,
                     Name = request.Name,
                     StartDate = request.StartDate,
-                    EndDate = request.EndDate,
-                    Locations = request.Locations
+                    EndDate = request.EndDate
                 };
+                travelPlan.SetLocations(request.Locations);
 
                 await _travelPlansRepository.AddAsync(travelPlan);
 

@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
 
         public async Task AddAsync(TravelPlan travelPlan)
         {
-            await _context.TravelPlans.AddAsync(travelPlan);
+            await _context.TravelPlans.AddAsync(travelPlan);     
             await _context.SaveChangesAsync();
         }
 

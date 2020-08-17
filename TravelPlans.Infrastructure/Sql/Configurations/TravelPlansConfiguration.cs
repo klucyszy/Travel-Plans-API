@@ -14,7 +14,6 @@ namespace TravelPlans.Infrastructure.Sql.Configurations
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
             builder.Property(x => x.StartDate).IsRequired();
             builder.Property(x => x.EndDate).IsRequired();
-            builder.Ignore(x => x.Locations);
         }
     }
 }
