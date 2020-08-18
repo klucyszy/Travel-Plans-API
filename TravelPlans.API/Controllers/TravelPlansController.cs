@@ -15,7 +15,7 @@ namespace TravelPlans.API.Controllers
         /// Retrieve users travel plans.
         /// </summary>
         /// <returns>List of user travel plans.</returns>
-        [HttpGet("me")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<TravelPlanDto>>> Get()
         {
             var travelPlans = await Mediator.Send(new GetTravelPlansQuery(CurrentUser.Id, CurrentUser.IsAdmin));
@@ -24,10 +24,10 @@ namespace TravelPlans.API.Controllers
         }
 
         /// <summary>
-        /// Retrieve all travel plans.
+        /// Retrieve all travel plans. Available only for admins.
         /// </summary>
-        /// <returns>List of travel plans.</returns>
-        [HttpGet]
+        /// <returns>List of all travel plans.</returns>
+        [HttpGet("all")]
         [Authorize(Policy = "Admins")]
         public async Task<ActionResult> GetAll()
         {
@@ -46,11 +46,6 @@ namespace TravelPlans.API.Controllers
             if (!string.IsNullOrEmpty(command.UserId) && !CurrentUser.IsAdmin)
             {
                 return Forbid();
-            }
-
-            if (string.IsNullOrEmpty(command.UserId))
-            {
-                command.UserId = CurrentUser.Id;
             }
 
             await Mediator.Send(command);

@@ -1,5 +1,6 @@
 ﻿using Domain.Repositories;
 using MediatR;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,6 +12,8 @@ namespace TravelPlans.Application.TravelPlans.Commands
     public class AddTravelPlanCommand : IRequest
     {
         public string UserId { get; set; }
+        [JsonIgnore]
+        public string IsAdmin { get; set; }
         public string Name { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }

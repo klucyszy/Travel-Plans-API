@@ -1,15 +1,13 @@
 ﻿using Domain.Repositories;
 using MediatR;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TravelPlans.Application.Common.Queries;
 using TravelPlans.Application.TravelPlans.Dtos;
 using TravelPlans.Application.TravelPlans.Extensions;
 
 namespace TravelPlans.Application.TravelPlans.Queries
 {
-    public class GetTravelPlansQuery : IQuery<TravelPlansPageDto>
+    public class GetTravelPlansQuery : IRequest<TravelPlansPageDto>
     {
         public string UserId { get; set; }
         public bool IsAdmin { get; set; }

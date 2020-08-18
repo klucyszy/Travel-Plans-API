@@ -12,9 +12,9 @@
         </member>
         <member name="M:TravelPlans.API.Controllers.TravelPlansController.GetAll">
             <summary>
-            Retrieve all travel plans.
+            Retrieve all travel plans. Available only for admins.
             </summary>
-            <returns>List of travel plans.</returns>
+            <returns>List of all travel plans.</returns>
         </member>
         <member name="M:TravelPlans.API.Controllers.TravelPlansController.Add(TravelPlans.Application.TravelPlans.Commands.AddTravelPlanCommand)">
             <summary>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TravelPlans.API.Common.Filters;
 using TravelPlans.Application;
 using TravelPlans.Infrastructure;
 
@@ -20,7 +21,10 @@ namespace TravelPlans.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new ApiExceptionFilterAttribute());
+            });
             services.AddOptions();
             services.AddDatabase(Configuration);
             services.AddApplication();
