@@ -4,12 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TravelPlans.Application.Common.Commands;
 using TravelPlans.Domain.Entities;
 
 namespace TravelPlans.Application.TravelPlans.Commands
 {
-    public class AddTravelPlanCommand : ICommand
+    public class AddTravelPlanCommand : IRequest
     {
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -17,7 +16,7 @@ namespace TravelPlans.Application.TravelPlans.Commands
         public DateTime? EndDate { get; set; }
         public IEnumerable<string> Locations { get; set; }
 
-        private class AddTravelPlanCommandHandler : IRequestHandler<AddTravelPlanCommand>
+        public class AddTravelPlanCommandHandler : IRequestHandler<AddTravelPlanCommand>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
 

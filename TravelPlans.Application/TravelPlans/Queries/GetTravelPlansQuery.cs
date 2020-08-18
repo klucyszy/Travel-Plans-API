@@ -9,16 +9,18 @@ using TravelPlans.Application.TravelPlans.Extensions;
 
 namespace TravelPlans.Application.TravelPlans.Queries
 {
-    public class GetTravelPlansQuery : IQuery<IEnumerable<TravelPlanDto>>
+    public class GetTravelPlansQuery : IQuery<TravelPlansPageDto>
     {
         public string UserId { get; set; }
+        public bool IsAdmin { get; set; }
 
-        public GetTravelPlansQuery(string userId)
+        public GetTravelPlansQuery(string userId, bool isAdmin)
         {
             UserId = userId;
+            IsAdmin = isAdmin;
         }
 
-        private class GetTravelPlansQueryHandler : IRequestHandler<GetTravelPlansQuery, IEnumerable<TravelPlanDto>>
+        private class GetTravelPlansQueryHandler : IRequestHandler<GetTravelPlansQuery, TravelPlansPageDto>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
 
@@ -27,11 +29,11 @@ namespace TravelPlans.Application.TravelPlans.Queries
                 _travelPlansRepository = travelPlansRepository;
             }
 
-            public async Task<IEnumerable<TravelPlanDto>> Handle(GetTravelPlansQuery request, CancellationToken cancellationToken)
+            public async Task<TravelPlansPageDto> Handle(GetTravelPlansQuery request, CancellationToken cancellationToken)
             {
                 var travelPlans = await _travelPlansRepository.GetAllAsync(request.UserId);
 
-                return travelPlans.AsDtoEnumerable();
+                return new TravelPlansPageDto(travelPlans.AsDtoEnumerable(), request.IsAdmin);
             }
         }
     }

@@ -16,17 +16,16 @@ namespace TravelPlans.API.Common.Models
         public string DisplayName { get; }
         public string Email { get; }
         public IEnumerable<string> Groups { get; set; }
+        public bool IsAdmin { get; set; }
 
-        public bool IsAdmin => Groups.Contains(_adminGroupId);
-
-        public ApplicationUser(IEnumerable<Claim> claims, AzureAdSettings settings)
+        public ApplicationUser(IEnumerable<Claim> claims, string adminGroupId)
         {
             if (claims is null)
             {
                 return;
             }
 
-            _adminGroupId = settings?.AdminGroup;
+            _adminGroupId = adminGroupId;
 
             Id = claims.TryGetClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
             FirstName = claims.TryGetClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname");
@@ -34,6 +33,7 @@ namespace TravelPlans.API.Common.Models
             DisplayName = claims.TryGetClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
             Email = claims.TryGetClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
             Groups = claims.TryGetClaimAsEnumerable("groups");
+            IsAdmin = claims.TryGetClaimAsEnumerable("groups").Any(g => g == _adminGroupId);
         }
     }
 }

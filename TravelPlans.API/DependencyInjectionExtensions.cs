@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using TravelPlans.API.Common.AuthorizationPolicies;
 using TravelPlans.API.Common.Settings;
 
 namespace TravelPlans.API
@@ -112,6 +115,22 @@ namespace TravelPlans.API
                 }
             );
 
+            services.AddAuthorization(options =>
+            {
+                var azureAdSecurityGroups = new List<AzureAdGroup>();
+                configuration.Bind("AzureAdGroupsSettings:AzureAdSecurityGroups", azureAdSecurityGroups);
+
+                foreach (var adGroup in azureAdSecurityGroups)
+                {
+                    options.AddPolicy(
+                        adGroup.Name,
+                        policy =>
+                            policy.AddRequirements(new GroupMemberRequirement(adGroup.Id, adGroup.Name)));
+                }
+            });
+
+            services.AddSingleton<IAuthorizationHandler, GroupMemberHandler>();
+            services.Configure<AzureAdGroupsSettings>(configuration.GetSection("AzureAdGroupsSettings"));
             services.Configure<AzureAdSettings>(configuration.GetSection("AzureAd"));
 
             return services;

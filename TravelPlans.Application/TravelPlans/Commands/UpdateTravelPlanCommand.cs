@@ -2,18 +2,22 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using TravelPlans.Application.Common.Commands;
 using TravelPlans.Application.TravelPlans.Dtos;
 using TravelPlans.Application.TravelPlans.Exceptions;
 using TravelPlans.Application.TravelPlans.Extensions;
 
 namespace TravelPlans.Application.TravelPlans.Commands
 {
-    public class UpdateTravelPlanCommand : ICommand
-    {
+    public class UpdateTravelPlanCommand : IRequest
+    {       
         public TravelPlanDto TravelPlan { get; set; }
 
-        private class UpdateTravelPlanCommandHandler : IRequestHandler<UpdateTravelPlanCommand>
+        public UpdateTravelPlanCommand(TravelPlanDto travelPlan)
+        {
+            TravelPlan = travelPlan;
+        }
+
+        public class UpdateTravelPlanCommandHandler : IRequestHandler<UpdateTravelPlanCommand>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
 

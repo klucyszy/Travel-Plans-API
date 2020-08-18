@@ -1,5 +1,4 @@
 ﻿using Domain.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using TravelPlans.Infrastructure.Sql.Context;
 
 namespace Infrastructure.Repositories
 {
-    public class TravelPlansRepository : ITravelPlansRepository
+    internal sealed class TravelPlansRepository : ITravelPlansRepository
     {
         private readonly ITravelPlansContext _context;
 
@@ -19,8 +18,9 @@ namespace Infrastructure.Repositories
 
         public async Task AddAsync(TravelPlan travelPlan)
         {
-            await _context.TravelPlans.AddAsync(travelPlan);     
+            await _context.TravelPlans.AddAsync(travelPlan);
             await _context.SaveChangesAsync();
+
         }
 
         public async Task DeleteAsync(int id)

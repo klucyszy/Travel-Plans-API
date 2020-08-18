@@ -9,6 +9,5 @@ namespace TravelPlans.API.Common.Settings
         public string ClientId { get; set; }
         public string Audience { get; set; }
         public string Issuer { get; set; }
-        public string AdminGroup { get; set; }
     }
 }

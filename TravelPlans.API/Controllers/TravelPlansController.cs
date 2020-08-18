@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TravelPlans.API.Common.Controllers;
@@ -17,7 +18,7 @@ namespace TravelPlans.API.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<IEnumerable<TravelPlanDto>>> Get()
         {
-            var travelPlans = await Mediator.Send(new GetTravelPlansQuery(CurrentUser.Id));
+            var travelPlans = await Mediator.Send(new GetTravelPlansQuery(CurrentUser.Id, CurrentUser.IsAdmin));
 
             return Ok(travelPlans);
         }
@@ -27,9 +28,10 @@ namespace TravelPlans.API.Controllers
         /// </summary>
         /// <returns>List of travel plans.</returns>
         [HttpGet]
+        [Authorize(Policy = "Admins")]
         public async Task<ActionResult> GetAll()
         {
-            var travelPlans = await Mediator.Send(new GetTravelPlansQuery(default));
+            var travelPlans = await Mediator.Send(new GetTravelPlansQuery(default, CurrentUser.IsAdmin));
 
             return Ok(travelPlans);
         }
@@ -43,7 +45,7 @@ namespace TravelPlans.API.Controllers
         {
             if (!string.IsNullOrEmpty(command.UserId) && !CurrentUser.IsAdmin)
             {
-                return Unauthorized();
+                return Forbid();
             }
 
             if (string.IsNullOrEmpty(command.UserId))
