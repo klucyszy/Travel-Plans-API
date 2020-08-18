@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
+using TravelPlans.API.Common.Settings;
 
 namespace TravelPlans.API
 {
@@ -86,6 +90,31 @@ namespace TravelPlans.API
             app.UseCors();
 
             return app;
+        }
+
+        #endregion
+
+        #region Authentication and Authorization
+
+        public static IServiceCollection AddAuthenticationAndAuthorization(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddJwtBearer("AzureAD", options =>
+                {
+                    options.Audience = configuration.GetValue<string>("AzureAd:Audience");
+                    options.Authority = configuration.GetValue<string>("AzureAd:Instance") + configuration.GetValue<string>("AzureAd:TenantId");
+
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = configuration.GetValue<string>("AzureAd:Issuer"),
+                        ValidAudience = configuration.GetValue<string>("AzureAd:Audience")
+                    };
+                }
+            );
+
+            services.Configure<AzureAdSettings>(configuration.GetSection("AzureAd"));
+
+            return services;
         }
 
         #endregion

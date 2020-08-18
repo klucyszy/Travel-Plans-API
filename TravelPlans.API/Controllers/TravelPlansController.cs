@@ -48,7 +48,7 @@ namespace TravelPlans.API.Controllers
 
             if (string.IsNullOrEmpty(command.UserId))
             {
-                command.UserId = "TestUser1";
+                command.UserId = CurrentUser.Id;
             }
 
             await Mediator.Send(command);
@@ -68,6 +68,11 @@ namespace TravelPlans.API.Controllers
             if (id != command.TravelPlan.Id)
             {
                 return BadRequest();
+            }
+
+            if (command.TravelPlan.UserId != CurrentUser.Id && !CurrentUser.IsAdmin)
+            {
+                return Unauthorized();
             }
 
             await Mediator.Send(command);

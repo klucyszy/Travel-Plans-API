@@ -21,10 +21,12 @@ namespace TravelPlans.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddOptions();
             services.AddDatabase(Configuration);
             services.AddApplication();
             services.AddSwaggerDocs();
             services.AddCorsPolicy();
+            services.AddAuthenticationAndAuthorization(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,13 +43,14 @@ namespace TravelPlans.API
 
             app.UseCorsPolicy();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
+                
             app.UseSwaggerDocs();
         }
     }
