@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TravelPlans.API.Common.Controllers;
+using TravelPlans.API.Model.TravelPlans;
 using TravelPlans.Application.TravelPlans.Commands;
 using TravelPlans.Application.TravelPlans.Dtos;
 using TravelPlans.Application.TravelPlans.Queries;
@@ -41,12 +42,18 @@ namespace TravelPlans.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Add(AddTravelPlanCommand command)
+        public async Task<ActionResult> Add(AddTravelPlanDto request)
         {
-            if (!string.IsNullOrEmpty(command.UserId) && !CurrentUser.IsAdmin)
+            AddTravelPlanCommand command = new AddTravelPlanCommand
             {
-                return Forbid();
-            }
+                UserId = request?.UserId,
+                CurrentUserId = CurrentUser.Id,
+                IsAdmin = CurrentUser.IsAdmin,
+                Name = request?.Name,
+                StartDate = request?.StartDate,
+                EndDate = request?.EndDate,
+                Locations = request?.Locations
+            };
 
             await Mediator.Send(command);
 
@@ -60,17 +67,24 @@ namespace TravelPlans.API.Controllers
         /// <param name="command">Travel plan updated body.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, UpdateTravelPlanCommand command)
+        public async Task<ActionResult> Update(int id, UpdateTravelPlanDto request)
         {
-            if (id != command.TravelPlan.Id)
+            if (id != request.Id)
             {
                 return BadRequest();
             }
 
-            if (command.TravelPlan.UserId != CurrentUser.Id && !CurrentUser.IsAdmin)
+            UpdateTravelPlanCommand command = new UpdateTravelPlanCommand
             {
-                return Unauthorized();
-            }
+                Id = request.Id,
+                UserId = request?.UserId,
+                CurrentUserId = CurrentUser.Id,
+                IsAdmin = CurrentUser.IsAdmin,
+                Name = request?.Name,
+                StartDate = request?.StartDate,
+                EndDate = request?.EndDate,
+                Locations = request?.Locations
+            };
 
             await Mediator.Send(command);
 
@@ -86,7 +100,14 @@ namespace TravelPlans.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await Mediator.Send(new RemoveTravelPlanCommand(id, CurrentUser.Id));
+            RemoveTravelPlanCommand command = new RemoveTravelPlanCommand
+            {
+                Id = id,
+                CurrentUserId = CurrentUser.Id,
+                IsAdmin = CurrentUser.IsAdmin
+            };
+
+            await Mediator.Send(command);
 
             return Ok();
         }

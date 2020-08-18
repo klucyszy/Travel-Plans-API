@@ -16,13 +16,13 @@
             </summary>
             <returns>List of all travel plans.</returns>
         </member>
-        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Add(TravelPlans.Application.TravelPlans.Commands.AddTravelPlanCommand)">
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Add(TravelPlans.API.Model.TravelPlans.AddTravelPlanDto)">
             <summary>
             Creates a new travel plan.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Update(System.Int32,TravelPlans.Application.TravelPlans.Commands.UpdateTravelPlanCommand)">
+        <member name="M:TravelPlans.API.Controllers.TravelPlansController.Update(System.Int32,TravelPlans.API.Model.TravelPlans.UpdateTravelPlanDto)">
             <summary>
             Update a travel plan.
             </summary>

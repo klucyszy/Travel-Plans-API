@@ -1,10 +1,10 @@
 ﻿using Domain.Repositories;
 using MediatR;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using TravelPlans.Application.TravelPlans.Policies;
 using TravelPlans.Domain.Entities;
 
 namespace TravelPlans.Application.TravelPlans.Commands
@@ -12,8 +12,8 @@ namespace TravelPlans.Application.TravelPlans.Commands
     public class AddTravelPlanCommand : IRequest
     {
         public string UserId { get; set; }
-        [JsonIgnore]
-        public string IsAdmin { get; set; }
+        public string CurrentUserId { get; set; }
+        public bool IsAdmin { get; set; }
         public string Name { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
@@ -30,6 +30,8 @@ namespace TravelPlans.Application.TravelPlans.Commands
 
             public async Task<Unit> Handle(AddTravelPlanCommand request, CancellationToken cancellationToken)
             {
+                TravelPlansPolicies.ValidateIsAdminOrAddingAccessingOwnTravelPlan(request.IsAdmin, request.CurrentUserId, request.UserId);
+
                 var travelPlan = new TravelPlan
                 {
                     UserId = request.UserId,

@@ -17,7 +17,8 @@ namespace TravelPlans.API.Common.Filters
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
                 { typeof(ValidationException), HandleValidationException },
-                { typeof(TravelPlanNotFoundException), HandleNotFoundApplicationException }
+                { typeof(TravelPlanNotFoundException), HandleNotFoundApplicationException },
+                { typeof(InsufficientPrivilidgesException), HandleForbiddenApplicationException }
             };
         }
 
@@ -80,6 +81,22 @@ namespace TravelPlans.API.Common.Filters
                 Status = StatusCodes.Status404NotFound,
                 Title = exception.Message,
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4"
+            };
+
+            context.Result = new NotFoundObjectResult(details);
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleForbiddenApplicationException(ExceptionContext context)
+        {
+            var exception = context.Exception as InsufficientPrivilidgesException;
+
+            var details = new ProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Title = exception.Message,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
             };
 
             context.Result = new NotFoundObjectResult(details);

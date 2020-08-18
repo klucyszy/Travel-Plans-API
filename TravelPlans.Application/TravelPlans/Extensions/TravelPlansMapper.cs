@@ -29,15 +29,13 @@ namespace TravelPlans.Application.TravelPlans.Extensions
 
         public static TravelPlan AsEntity(this TravelPlanDto travelPlanDto, int id)
         {
-            TravelPlan travelPlan = new TravelPlan
-            {
-                Id = id,
-                UserId = travelPlanDto.UserId,
-                Name = travelPlanDto.Name,
-                StartDate = DateTime.Parse(travelPlanDto.StartDate),
-                EndDate = DateTime.Parse(travelPlanDto.EndDate)
-            };
-            travelPlan.SetLocations(travelPlanDto.Locations);
+            TravelPlan travelPlan = new TravelPlan(
+                travelPlanDto.Id,
+                travelPlanDto.UserId,
+                travelPlanDto.Name,
+                DateTime.Parse(travelPlanDto.StartDate),
+                DateTime.Parse(travelPlanDto.EndDate),
+                travelPlanDto.Locations);
 
             return travelPlan;
         }

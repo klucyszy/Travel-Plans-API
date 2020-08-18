@@ -1,21 +1,25 @@
 ﻿using Domain.Repositories;
 using MediatR;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TravelPlans.Application.TravelPlans.Dtos;
 using TravelPlans.Application.TravelPlans.Exceptions;
-using TravelPlans.Application.TravelPlans.Extensions;
+using TravelPlans.Application.TravelPlans.Policies;
+using TravelPlans.Domain.Entities;
 
 namespace TravelPlans.Application.TravelPlans.Commands
 {
     public class UpdateTravelPlanCommand : IRequest
-    {       
-        public TravelPlanDto TravelPlan { get; set; }
-
-        public UpdateTravelPlanCommand(TravelPlanDto travelPlan)
-        {
-            TravelPlan = travelPlan;
-        }
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string CurrentUserId { get; set; }
+        public bool IsAdmin { get; set; }
+        public string Name { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public IEnumerable<string> Locations { get; set; }
 
         public class UpdateTravelPlanCommandHandler : IRequestHandler<UpdateTravelPlanCommand>
         {
@@ -28,12 +32,20 @@ namespace TravelPlans.Application.TravelPlans.Commands
 
             public async Task<Unit> Handle(UpdateTravelPlanCommand request, CancellationToken cancellationToken)
             {
-                if (!await _travelPlansRepository.ExistsAsync(request.TravelPlan.Id))
+                TravelPlansPolicies.ValidateIsAdminOrAddingAccessingOwnTravelPlan(request.IsAdmin, request.CurrentUserId, request.UserId);
+
+                if (!await _travelPlansRepository.ExistsAsync(request.Id))
                 {
-                    throw new TravelPlanNotFoundException(request.TravelPlan.Id);
+                    throw new TravelPlanNotFoundException(request.Id);
                 }
 
-                var travelPlan = request.TravelPlan.AsEntity(request.TravelPlan.Id);
+                TravelPlan travelPlan = new TravelPlan(
+                    request.Id,
+                    request.UserId,
+                    request.Name,
+                    request.StartDate,
+                    request.EndDate,
+                    request.Locations);
 
                 await _travelPlansRepository.UpdateAsync(travelPlan);
 
