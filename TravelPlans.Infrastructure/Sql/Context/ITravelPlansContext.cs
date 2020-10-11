@@ -5,10 +5,10 @@ using TravelPlans.Domain.Entities;
 
 namespace TravelPlans.Infrastructure.Sql.Context
 {
-    public interface ITravelPlansContext
+    internal interface ITravelPlansContext
     {
-        public DbSet<TravelPlan> TravelPlans { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        DbSet<TravelPlan> TravelPlans { get; set; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         void Detach(TravelPlan travelPlan);
     }
 }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TravelPlans.Domain.Entities;
+using TravelPlans.Infrastructure.Sql.Entities;
 
 namespace TravelPlans.Infrastructure.Sql.Configurations
 {
-    public class TravelPlansConfiguration : IEntityTypeConfiguration<TravelPlan>
+    internal sealed class TravelPlansConfiguration : IEntityTypeConfiguration<TravelPlanEntity>
     {
-        public void Configure(EntityTypeBuilder<TravelPlan> builder)
+        public void Configure(EntityTypeBuilder<TravelPlanEntity> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();

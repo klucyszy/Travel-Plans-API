@@ -18,7 +18,7 @@ namespace TravelPlans.Application.TravelPlans.Extensions
                 Name = travelPlan.Name,
                 StartDate = travelPlan.StartDate.HasValue ? travelPlan.StartDate.Value.ToString("yyyy-MM-dd") : null,
                 EndDate = travelPlan.EndDate.HasValue ? travelPlan.EndDate.Value.ToString("yyyy-MM-dd") : null,
-                Locations = travelPlan.GetLocations()
+                Locations = travelPlan.Locations
             };
         }
         
@@ -27,7 +27,7 @@ namespace TravelPlans.Application.TravelPlans.Extensions
             return travelPlans.Select(tr => tr.AsDto());
         }
 
-        public static TravelPlan AsEntity(this TravelPlanDto travelPlanDto, int id)
+        public static TravelPlan AsDomainObject(this TravelPlanDto travelPlanDto)
         {
             TravelPlan travelPlan = new TravelPlan(
                 travelPlanDto.Id,

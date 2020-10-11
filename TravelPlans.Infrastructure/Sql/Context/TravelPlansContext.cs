@@ -6,7 +6,7 @@ using TravelPlans.Domain.Entities;
 
 namespace TravelPlans.Infrastructure.Sql.Context
 {
-    public class TravelPlansContext : DbContext, ITravelPlansContext
+    internal sealed class TravelPlansContext : DbContext, ITravelPlansContext
     {
         public DbSet<TravelPlan> TravelPlans { get; set; }
 
