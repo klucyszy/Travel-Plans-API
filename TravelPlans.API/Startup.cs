@@ -31,6 +31,7 @@ namespace TravelPlans.API
             services.AddSwaggerDocs();
             services.AddCorsPolicy();
             services.AddAuthenticationAndAuthorization(Configuration);
+            services.AddMassTransit();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

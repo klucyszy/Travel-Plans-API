@@ -10,6 +10,9 @@ using TravelPlans.Application.TravelPlans.Queries;
 
 namespace TravelPlans.API.Controllers
 {
+    /// <summary>
+    /// TravelPlansController.
+    /// </summary>
     public class TravelPlansController : BaseApiController
     {
         /// <summary>
@@ -64,7 +67,7 @@ namespace TravelPlans.API.Controllers
         /// Update a travel plan.
         /// </summary>
         /// <param name="id">Travel plan indentifier.</param>
-        /// <param name="command">Travel plan updated body.</param>
+        /// <param name="request">Travel plan updated body.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UpdateTravelPlanDto request)
