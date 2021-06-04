@@ -16,8 +16,4 @@
     <ProjectReference Include="..\TravelPlans.Messaging\TravelPlans.Messaging.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Emails\Events\External\Handlers\" />
-  </ItemGroup>
-
 </Project>

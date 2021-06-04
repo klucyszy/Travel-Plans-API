@@ -1,6 +1,8 @@
-﻿namespace TravelPlans.Messaging.Events
+﻿using TravelPlans.Messaging.Abstractions;
+
+namespace TravelPlans.Messaging.Events
 {
-    public class TravelPlanAdded
+    public class TravelPlanAdded : IEvent
     {
         public TravelPlanAdded(int id)
         {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TravelPlans.Messaging.Abstractions;
 using TravelPlans.Messaging.Events;
 
-namespace TravelPlans.Application.Calendar.Events.External.Handlers
+namespace TravelPlans.Application.Emails.Events.External.Handlers
 {
     public class TravelPlanAddedConsumer : IEventConsumer<TravelPlanAdded>
     {
@@ -17,7 +17,7 @@ namespace TravelPlans.Application.Calendar.Events.External.Handlers
 
         public Task Consume(ConsumeContext<TravelPlanAdded> context)
         {
-            _logger.LogInformation($"[Calendar] TravelPlanAddedConsumer invoked for Travel Plan with ID: {context.Message.Id}");
+            _logger.LogInformation($"[Emails] TravelPlanAddedConsumer invoked for Travel Plan with ID: {context.Message.Id}");
 
             return Task.CompletedTask;
         }

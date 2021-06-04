@@ -6,9 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TravelPlans.Infrastructure.Sql.Context;
 using MassTransit;
-using TravelPlans.Messaging.Events;
-using TravelPlans.Application.Calendar.Events.External.Handlers;
 using System;
+using System.Linq;
 
 namespace TravelPlans.Infrastructure
 {
@@ -31,7 +30,11 @@ namespace TravelPlans.Infrastructure
         {
             services.AddMassTransit(opts =>
             {
-                opts.AddConsumers(typeof(TravelPlanAddedConsumer).Assembly);
+                var solutionAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.FullName.Contains("TravelPlans"));
+                foreach(var assembly in solutionAssemblies)
+                {
+                    opts.AddConsumers(assembly);
+                }
 
                 opts.UsingInMemory((context, cfg) =>
                 {
