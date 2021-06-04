@@ -15,7 +15,7 @@ namespace TravelPlans.Application.TravelPlans.Commands
         public string CurrentUserId { get; set; }
         public bool IsAdmin { get; set; }
 
-        public class RemoveTravelPlanCommandHandler : IRequestHandler<RemoveTravelPlanCommand>
+        internal class RemoveTravelPlanCommandHandler : IRequestHandler<RemoveTravelPlanCommand>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
 

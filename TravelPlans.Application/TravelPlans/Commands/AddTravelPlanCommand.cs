@@ -21,7 +21,7 @@ namespace TravelPlans.Application.TravelPlans.Commands
         public DateTime? EndDate { get; set; }
         public IEnumerable<string> Locations { get; set; }
 
-        public class AddTravelPlanCommandHandler : IRequestHandler<AddTravelPlanCommand>
+        internal class AddTravelPlanCommandHandler : IRequestHandler<AddTravelPlanCommand>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
             private readonly IPublishEndpoint _publishEndpoint;
@@ -49,6 +49,7 @@ namespace TravelPlans.Application.TravelPlans.Commands
 
                 await _travelPlansRepository.AddAsync(travelPlan);
 
+                // Publish using MassTransit
                 await _publishEndpoint.Publish(new TravelPlanAdded(travelPlan.Id));
 
                 return Unit.Value;

@@ -21,7 +21,7 @@ namespace TravelPlans.Application.TravelPlans.Commands
         public DateTime? EndDate { get; set; }
         public IEnumerable<string> Locations { get; set; }
 
-        public class UpdateTravelPlanCommandHandler : IRequestHandler<UpdateTravelPlanCommand>
+        internal class UpdateTravelPlanCommandHandler : IRequestHandler<UpdateTravelPlanCommand>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
 

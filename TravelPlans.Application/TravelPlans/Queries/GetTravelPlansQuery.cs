@@ -18,7 +18,7 @@ namespace TravelPlans.Application.TravelPlans.Queries
             IsAdmin = isAdmin;
         }
 
-        private class GetTravelPlansQueryHandler : IRequestHandler<GetTravelPlansQuery, TravelPlansPageDto>
+        internal class GetTravelPlansQueryHandler : IRequestHandler<GetTravelPlansQuery, TravelPlansPageDto>
         {
             private readonly ITravelPlansRepository _travelPlansRepository;
 
